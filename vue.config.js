@@ -37,7 +37,8 @@ module.exports = {
                 alias:{
                     '@':resolve('./src'),
                     '@c':resolve('./src/components'),
-                    '@p':resolve('./src/pages')
+                    '@p':resolve('./src/pages'),
+                    '@v':resolve('./src/views')
                 }
             }
         })

@@ -1,12 +1,16 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <student-component></student-component>
   </div>
 </template>
 
 <script>
+import StudentComponent from '@/views/student'
 export default {
-  name: 'app'
+  name: 'app',
+  components:{
+      StudentComponent
+  }
 }
 </script>
 
