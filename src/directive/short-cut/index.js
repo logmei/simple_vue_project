@@ -25,5 +25,8 @@ const shortCut = {
   }
 
 }
-
+const install = function(Vue){
+    Vue.directive('shortCut',shortCut)
+}
+shortCut.install = install
 export default shortCut
