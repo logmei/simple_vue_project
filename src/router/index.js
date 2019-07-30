@@ -29,7 +29,7 @@ export const constantRoutes = [
 export const asyncRoutes = [
     {
         path:'/',
-        component:()=>import('@c/index.vue'),
+        component:()=>import('@/views/welcome/index.vue'),
         name:'Main'
     }
 ]
