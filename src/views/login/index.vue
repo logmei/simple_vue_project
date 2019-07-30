@@ -39,7 +39,9 @@ export default {
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            this.$store.dispatch('user/login',this.ruleForm).then(()=>{
+                this.$router.push({path:'/'})
+            })
           } else {
             console.log('error submit!!');
             return false;
@@ -51,7 +53,7 @@ export default {
       }
     }
   }
-}
+
 </script>
 <style lang="scss" scoped>
 .login-class{
