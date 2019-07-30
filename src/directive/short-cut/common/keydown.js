@@ -1,4 +1,4 @@
-import { conChooseAction } from './methods.js'
+import { conChooseAction, IS_MATCH } from './methods.js'
 import { METHODS_FUN } from './constants.js'
 import ChooseByKeydownClass from './ChooseByKeydownClass.js'
 /**
@@ -36,13 +36,9 @@ function isTriggerAction(e, chooseByKeydown, methodNames) {
     ret = false
     return
   }
-  const IgoreMethodNames = METHODS_FUN.Arrow
-  chooseByKeydown.IGORE_ARROW_OPERATOR.forEach(o => {
-    let parent = e.target
-    for (let i = 0; i < o.parentlayer; i++) {
-      parent = parent['parentNode']
-    }
-    if (parent.className.indexOf(o.className) !== -1 && Object.keys(IgoreMethodNames).indexOf('' + e.keyCode) !== -1) {
+  const IgnoreMethodNames = METHODS_FUN.Arrow
+  chooseByKeydown.IGNORE_ARROW_OPERATOR.forEach(o => {
+    if (IS_MATCH[o](e.target) && Object.keys(IgnoreMethodNames).indexOf('' + e.keyCode) !== -1) {
       ret = false
       return
     }

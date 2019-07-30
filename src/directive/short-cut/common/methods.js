@@ -82,8 +82,59 @@ function typeOf(type) {
 function appointElementFocus(chooseByKeyEntity) {
   chooseByKeyEntity.el.querySelector(`#${chooseByKeyEntity.binding.value}`).focus()
 }
+/**
+ * 是否匹配元素
+ * @param {String} type :控件的类型
+ */
+function isMatchedDom(type) {
+  switch (type) {
+    case 'disabled':
+      return function(ele) {
+        return ele ? (ele.getAttribute(type) === true) : false
+      }
+    case 'readonly':
+      return function(ele) {
+        return ele ? (ele.getAttribute(type) === 'readonly') : false
+      }
+    case 'select':
+      return function(ele) {
+        return ele ? (ele.getAttribute(type) === 'readonly' || ele.parentNode.parentNode.className.indexOf('el-select') !== -1) : false
+      }
+    case 'radio':
+      return function(ele) {
+        return ele ? (ele.parentNode.parentNode.className.indexOf('el-radio') !== -1) : false
+      }
+    case 'checkbox':
+      return function(ele) {
+        return ele ? (ele.parentNode.parentNode.className.indexOf('el-checkbox') !== -1) : false
+      }
+    case 'date':
+      return function(ele) {
+        return ele ? (ele.parentNode.className.indexOf('el-date-editor') !== -1) : false
+      }
+    case '_multi_select_hidden':
+      return function(ele) {
+        return ele ? (ele.className.indexOf('el-select__input') !== -1 && ele.parentNode.parentNode.className.indexOf('el-select') !== -1) : false
+      }
+    case 'multi_select':
+      return function(ele) {
+        return ele ? ((ele.className.indexOf('el-select__input') !== -1 || ele.getAttribute('readonly') === 'readonly') && ele.parentNode.parentNode.className.indexOf('el-select') !== -1) : false
+      }
+  }
+}
+const IS_MATCH = {
+  disabled: isMatchedDom('disabled'),
+  readonly: isMatchedDom('readonly'),
+  select: isMatchedDom('select'),
+  radio: isMatchedDom('radio'),
+  checkbox: isMatchedDom('checkbox'),
+  date: isMatchedDom('date'),
+  multi_select: isMatchedDom('multi_select'),
+  _multi_select_hidden: isMatchedDom('_multi_select_hidden')
+}
 export {
   conChooseAction,
   typeOf,
-  appointElementFocus
+  appointElementFocus,
+  IS_MATCH
 }

@@ -1,8 +1,8 @@
-import { typeOf } from './methods.js'
+import { typeOf, IS_MATCH } from './methods.js'
 export default class ChooseByKeydownClass {
-    IGORE_INPUTS = { disabled: true, readonly: 'readonly' }
     SELECT_INPUT_TYPES = ['input', 'select', 'testarea']
-    IGORE_ARROW_OPERATOR = [{ parentlayer: 1, className: 'el-date-editor' }, { parentlayer: 2, className: 'el-select' }]
+    IGNORE_ARROW_OPERATOR = ['date', 'select']
+    IGNORE_INPUTS = ['radio', 'checkbox', 'disabled', '_multi_select_hidden']
     CURSOR_INDEX = 0
     /**
      *
@@ -84,7 +84,7 @@ export default class ChooseByKeydownClass {
         }
       }
       // 自动获取元素列表
-      if (typeOf('object')(this.binding.value) && this.binding.value.parenClassName) {
+      if (typeOf('object')(this.binding.value) && this.binding.value.parenClassName && this.el.getElementsByClassName(this.binding.value.parenClassName)[0]) {
         return this.el.getElementsByClassName(this.binding.value.parenClassName)[0].querySelectorAll(this.SELECT_INPUT_TYPES.join())
       } else {
         return this.el.querySelectorAll(this.SELECT_INPUT_TYPES.join())
@@ -92,12 +92,14 @@ export default class ChooseByKeydownClass {
     }
     // 获取需要操作的元素
     getEffectiveInput() {
+    //   debugger
       const inputs = this.querySelectorAll()
+      const ignore_inputs = typeOf('object')(this.binding.value) ? (this.binding.value.ignore ? [...this.IGNORE_INPUTS, ...this.binding.value.ignore] : this.IGNORE_INPUTS) : this.IGNORE_INPUTS
       const newInputs = []
       inputs.forEach(ele => {
         let filter = false // 过滤
-        Object.keys(this.IGORE_INPUTS).forEach(key => {
-          if (ele.getAttribute(key) === this.IGORE_INPUTS[key]) {
+        ignore_inputs.forEach(key => {
+          if (IS_MATCH[key] && IS_MATCH[key](ele)) {
             filter = true
             return
           }

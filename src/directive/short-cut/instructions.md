@@ -48,7 +48,8 @@ import shortCut from '@/directive/short-cut'
     callBack: () => {//获取最后一个元素触发的回调函数
       return this.addRow()
     },
-    parenClassName: 'el-table__body-wrapper' //父元素class下的所有操作元素
+    parenClassName: 'el-table__body-wrapper', //父元素class下的所有操作元素
+    ignore:[]//需要忽略的元素  disabled、select、radio、checkbox、date、multi_select (默认忽略：'radio', 'checkbox', 'disabled')
   },
   ```
     
