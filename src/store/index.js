@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import getters from './getters.js'
 //确保调用
 Vue.use(Vuex)
 //获取一个特定上下文，主要用来实现自动化导入模块
@@ -11,7 +12,7 @@ Vue.use(Vuex)
  * 
  */
 const suffix = '\\.js'
-const regExp = new RegExp(suffix+'$')
+// const regExp = new RegExp(suffix+'$') //新版本不支持，需要直接用正则字面量
 /**
  * require.context返回一个函数
  * 接收参数：
@@ -22,7 +23,7 @@ const regExp = new RegExp(suffix+'$')
  * 3、id:String 执行环境的id,主要用在module.hot.accept
  * 
  */
-const moduleFiles = require.context('./modules',false,regExp)
+const moduleFiles = require.context('./modules',false,/\.js$/)
 
 console.group('moduleFiles')
 console.log('keys',moduleFiles.keys())
@@ -31,14 +32,15 @@ console.log('resolve',moduleFiles.resolve(moduleFiles.keys()[0]))
 
 const modules = moduleFiles.keys().reduce((mode,key) => {
     const regExpModule = new RegExp(`^.*\\/(\\w+)${suffix}`)
-    const moduleName = key.repalce(regExpModule,'$1')//获取文件名称
+    const moduleName = key.replace(regExpModule,'$1')//获取文件名称
     mode[moduleName] = moduleFiles(key).default
     return mode
 },{});
 
 //创建store 
-const store = new Vuex.store({
-    modules
+const store = new Vuex.Store({
+    modules,
+    getters
 })
 
 export default store
