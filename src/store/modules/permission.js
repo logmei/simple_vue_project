@@ -23,9 +23,9 @@ const mutations = {
 const actions = {
     //可以采用context:login(context){context.commit('SET_TOKEN')}，也可以使用参数解构
     login({commit},userInfo){
-        const {name,password} = userInfo
+        const {userName,password} = userInfo
         return new Promise((resolve,reject)=>{
-            loginInterface({userName:name.trim(),password:password}).then(response=>{
+            loginInterface({userName:userName.trim(),password:password}).then(response=>{
                 const {data} = response
                 commit([SET_TOKEN],data.token)
                 setToken(data.token)
