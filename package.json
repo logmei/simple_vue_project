@@ -1,9 +1,12 @@
 {
-  "name": "logmei-test",
-  "version": "0.1.0",
+  "name": "{{name}}",
+  "version": "{{version}}",
+  "description": "{{description}}",
+  "author": "{{author}}",
   "private": true,
   "scripts": {
     "dev": "vue-cli-service serve",
+    "dev:stage": "vue-cli-service serve --mode stage",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -24,6 +27,7 @@
     "@vue/cli-plugin-eslint": "^3.8.0",
     "@vue/cli-service": "^3.8.0",
     "babel-eslint": "^10.0.1",
+    "ele-plus": "^0.1.4",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "vue-template-compiler": "^2.6.10"
